@@ -23,6 +23,10 @@
         </div>
         </div>
         @endif
+        <div>
+          <p>test Usertoken:{{ Session::get('usertoken') }}</p>
+          <p>test UserCarbon: {{ Session::get('usertimefile') }}</p>
+        </div>
                    <form method="post" action="{{ route('orderdetails.store') }}"> 
                         {{ csrf_field() }}
 
@@ -32,7 +36,7 @@
                         <div class="input-group-append">
                   <span class="input-group-text">Name</span>
                   </div>
-                  <input type="text" class="form-control" name="name" placeholder="Username" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" name="name" placeholder="Username" aria-describedby="basic-addon1" value="{{ old('name') }}">
                 
             </div>
 
@@ -71,7 +75,7 @@
                   <span class="input-group-text" id="basic-addon2">Mobile Phone</span>
                   </div>
                   <input type="text" 
-                         class="form-control" placeholder="Enter Mobile Phone Number..." aria-describedby="basic-addon1"
+                         class="form-control" placeholder="Enter Mobile Phone Number (Optional)..." aria-describedby="basic-addon1"
                          id="mobilephone-number"
                          name="mobilephone_no" 
                          >
@@ -135,6 +139,7 @@
                 <option value="2nd RD">2nd RD</option>
                 <option value="Amendments">Amendments</option>
                 <option value="Others">Others</option>
+                
               </select>
             </div>
             

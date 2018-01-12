@@ -14,13 +14,25 @@
                             </div>
                         </div>
                     </div>
-                   <form action="Reviewsubmit.html">
+                    @if (count($errors))
+        <div class="form-group">
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+        </div>
+        @endif
+                   <form action="{{route('uploaddetails.store')}}" method="POST" enctype="multipart/form-data">
+                     {{ csrf_field() }}
                     <div class="container">
                             <div class="row">
                             <div class="form-group col-md-12 col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-text"><strong>New File</strong></div>
-                                    <input class="form-control file" type="file" id="content_file" name="content_file[]" multiple>
+                                    <input class="form-control file" type="file" id="content-file" name="content_file">
                                 </div>
                             </div>
 
@@ -53,7 +65,7 @@
                      <div class="input-group-append">
                   <span class="input-group-text" id="basic-addon2">Total number of pages</span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Pages to print" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="Pages to print" name="number_page" aria-describedby="basic-addon1">
                 
             </div>
 

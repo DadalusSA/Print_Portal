@@ -30,6 +30,8 @@ Route::resource('orderdetails', 'FrontEnd\OrderdetailsController');
 Route::resource('uploaddetails', 'FrontEnd\UploaddetailsController');
 
 
+Route::get('/uploaddetails', 'FrontEnd\UploaddetailsController@create');
+
 Route::get('/orderdetails', 'FrontEnd\OrderdetailsController@create');
 
 Route::get('/orderdetails/create', function()
@@ -37,12 +39,6 @@ Route::get('/orderdetails/create', function()
 	return view('auth.login');
 });
 
-Route::get('projects/create/{id?}', 'ProjectsController@create');
-
-Route::resource('files', 'FrontEnd/FilesController');
-
-
-Route::resource('deliveries', 'DeliveriesController');
 
 Route::resource('users', 'UsersController');
 

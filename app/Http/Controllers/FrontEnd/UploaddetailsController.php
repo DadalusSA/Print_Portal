@@ -4,6 +4,8 @@ namespace Dadavel\Http\Controllers\FrontEnd;
 
 use Dadavel\uploaddetail;
 use Illuminate\Http\Request;
+use Session;
+use Storage;
 use Dadavel\Http\Controllers\Controller;
 
 class UploaddetailsController extends Controller
@@ -16,6 +18,7 @@ class UploaddetailsController extends Controller
     public function index()
     {
         //
+        return view('uploaddetail.index');
     }
 
     /**
@@ -38,6 +41,28 @@ class UploaddetailsController extends Controller
     public function store(Request $request)
     {
         //
+
+         $validatedData = $request->validate([
+        'content_file' => 'required|mimes:doc,docx',
+        'number_page' => 'required',
+    ]);
+
+         $file = request()->file('content_file');
+
+         $ext = $file->guessClientExtension();
+
+
+        $time = time();
+
+        $lala = Storage::files('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/');
+
+        $count = count($lala);
+
+        $countfile = $count + 1;
+
+         $file->storeAs('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile'),  "$countfile.{$ext}");
+
+         
     }
 
     /**
