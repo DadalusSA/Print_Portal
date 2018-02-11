@@ -3,8 +3,66 @@
 @section('content')
 
  <div class="container">
+  
+  {{Session::get('countuploadfile')}}
+    {{Session::get('usertoken')}}
+    @if($countfile >= 1)
+      <div class="showuploadedfile">
+        <hr>
+          <h2 class="intro-text text-center">
+            Uploaded Files
+          </h2>
+        </hr> 
 
-                    <div class="row">
+        @foreach($getfilenames as $getfilename)
+
+<div class="col-md-12">
+        <div class="card">
+            <div class="card-header click-able">
+                <h5 class="card-title"><strong>Folder</strong>
+                <span class="pull-right card-collapsed"><i class="fa fa-caret-square-o-down"></i></span>
+                </h5>
+            </div>
+            <div class="card-body" style="display: none;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Content</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>
+                 <br />File 1: <strong><a href="{{$getfilename}}" target="_blank">Check file</a></strong>
+                      </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href='http://zapsw.com/demo/print-on-demand/prints/delete/1' class='btn btn-danger delete-job'><strong>Delete Job</strong> <i class='fa fa-minus-circle' aria-hidden='true'></i> </a>
+            </div>
+        </div>
+    </div>
+           
+
+        @endforeach
+
+       <!-- @for($i = 1; $i <= (Session::get('countuploadfile') - 1) ; $i++)
+        <div class="col-md-12">
+           <div class="input-group">
+            <div class="input-group-text">
+              <a href="{{ url('/storage/app/uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile')) . '/' . $i}}">$</a>
+            </div>
+                                    <div class="input-group-text">
+          <i class="fa fa-caret-square-o-down" aria-hidden="true"></i>
+        </div>
+      </div>
+        </div>
+
+        @endfor -->
+      </div>
+      @endif
+        <div class="row">
                             <div class="col-md-12 col-lg-12 well">
                                 <hr>
                                 <h2 class="intro-text text-center">
@@ -14,13 +72,25 @@
                             </div>
                         </div>
                     </div>
-                   <form action="Reviewsubmit.html">
+                    @if (count($errors))
+        <div class="form-group">
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+        </div>
+        @endif
+                   <form action="{{route('uploaddetails.store')}}" method="POST" enctype="multipart/form-data">
+                     {{ csrf_field() }}
                     <div class="container">
                             <div class="row">
                             <div class="form-group col-md-12 col-sm-12">
                                 <div class="input-group">
                                     <div class="input-group-text"><strong>New File</strong></div>
-                                    <input class="form-control file" type="file" id="content_file" name="content_file[]" multiple>
+                                    <input class="form-control file" type="file" id="content-file" name="content_file">
                                 </div>
                             </div>
 
@@ -53,7 +123,7 @@
                      <div class="input-group-append">
                   <span class="input-group-text" id="basic-addon2">Total number of pages</span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Pages to print" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control" placeholder="Pages to print" name="number_page" aria-describedby="basic-addon1">
                 
             </div>
 
@@ -229,5 +299,27 @@
 
 </form> 
 @include('layouts.footer')
+@section('script')
+<script type="text/javascript">
+  $('.click-able').on("click", function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        var $span = $(this).find('span');
+        if ($span.hasClass('card-collapsed')) {
+            // expand the panel
+            $span.parents('.card').find('.card-body').slideDown();
+            $span.removeClass('card-collapsed');
+            $span.find('i').removeClass('fa fa-caret-square-o-down').addClass('fa fa-caret-square-o-up');
+        }
+        else {
+            // collapse the panel
+            $span.parents('.card').find('.card-body').slideUp();
+            $span.addClass('card-collapsed');
+            $span.find('i').removeClass('fa fa-caret-square-o-up').addClass('fa fa-caret-square-o-down');
+        }
+    });
+</script>
 
+@endsection
 @endsection

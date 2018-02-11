@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
                     $table->string('mobile_number');
                     $table->string('gpn_number');
                     $table->string('desk_location');
-                    $table->
                     
                     $table->rememberToken();
                     $table->timestamps();

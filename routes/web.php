@@ -29,6 +29,11 @@ Route::resource('orderdetails', 'FrontEnd\OrderdetailsController');
 
 Route::resource('uploaddetails', 'FrontEnd\UploaddetailsController');
 
+Route::get('/uploadedfile/{link}/{folder}/{filename}', 'FrontEnd\UploaddetailsController@download');
+
+Route::get('/uploadedfile/1/1', 'FrontEnd\UploaddetailsController@download');
+
+Route::get('/uploaddetails', 'FrontEnd\UploaddetailsController@create');
 
 Route::get('/orderdetails', 'FrontEnd\OrderdetailsController@create');
 
@@ -38,11 +43,6 @@ Route::get('/orderdetails/create', function()
 });
 
 Route::get('projects/create/{id?}', 'ProjectsController@create');
-
-Route::resource('files', 'FrontEnd/FilesController');
-
-
-Route::resource('deliveries', 'DeliveriesController');
 
 Route::resource('users', 'UsersController');
 

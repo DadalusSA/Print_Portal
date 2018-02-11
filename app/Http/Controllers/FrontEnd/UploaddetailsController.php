@@ -4,7 +4,12 @@ namespace Dadavel\Http\Controllers\FrontEnd;
 
 use Dadavel\uploaddetail;
 use Illuminate\Http\Request;
+use Session;
+use Storage;
+use Response;
 use Dadavel\Http\Controllers\Controller;
+// use Symfony\Component\Finder\Finder;
+
 
 class UploaddetailsController extends Controller
 {
@@ -16,6 +21,7 @@ class UploaddetailsController extends Controller
     public function index()
     {
         //
+        return view('uploaddetail.index');
     }
 
     /**
@@ -26,7 +32,15 @@ class UploaddetailsController extends Controller
     public function create()
     {
         //
-        return view('uploaddetail.create');
+        $getnames = Storage::directories('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/');
+        $getfilenames = Storage::allfiles('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/');
+        $count = count($getnames);
+       // $content = Storage::get($getfilenames[0]);
+       // $finder = new Finder();
+       //$get = $finder->files()->name(storage_path('app/uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/1/.pdf$/'));
+        //dd($content);
+
+        return view('uploaddetail.create', ['countfile' => $count , 'getnames' => $getnames, 'getfilenames' => $getfilenames]);
     }
 
     /**
@@ -38,6 +52,42 @@ class UploaddetailsController extends Controller
     public function store(Request $request)
     {
         //
+
+         $validatedData = $request->validate([
+        'content_file' => 'required|mimes:doc,docx',
+        'number_page' => 'required',
+    ]);
+
+         $file = request()->file('content_file');
+
+        // $ext = $file->guessClientExtension();
+
+         $name = $file->getClientOriginalName();
+
+        //$time = time();
+
+       // $lala = Storage::directories('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/');
+
+       // $count = count($lala);
+
+        $countfile = Session::get('countuploadfile');
+
+        $file->storeAs('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . "/" . $countfile ,"$name");
+
+        ++$countfile;
+
+        session()->put('countuploadfile', $countfile);
+
+        return back();
+
+
+
+        // if(Storage::exists($lala))
+        // {
+        //     dd($lala);
+        // $file->storeAs('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . "/" . $count ,"$name");
+
+        // }
     }
 
     /**
@@ -63,6 +113,7 @@ class UploaddetailsController extends Controller
         //
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -84,5 +135,15 @@ class UploaddetailsController extends Controller
     public function destroy(uploaddetail $uploaddetail)
     {
         //
+    }
+
+    public function download($link, $folder, $filename)
+    {
+        return response()->file(storage_path('app/uploadedfile/' . $link ."/". $folder ."/" . $filename), [], 'inline');
+
+    //     return Response::make(storage_path('app/uploadedfile/' . $link ."/". $folder ."/" . $filename), 200, [
+    //     'Content-Type' => 'application/msword',
+    //     'Content-Disposition' => 'inline; filename="' . $filename . '"'
+    // ]);
     }
 }
