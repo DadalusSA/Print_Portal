@@ -6,7 +6,10 @@ use Dadavel\uploaddetail;
 use Illuminate\Http\Request;
 use Session;
 use Storage;
+<<<<<<< HEAD
 use Response;
+=======
+>>>>>>> d5532b219e87495c551539ec791b1105dec605c0
 use Dadavel\Http\Controllers\Controller;
 // use Symfony\Component\Finder\Finder;
 
@@ -60,6 +63,7 @@ class UploaddetailsController extends Controller
 
          $file = request()->file('content_file');
 
+<<<<<<< HEAD
         // $ext = $file->guessClientExtension();
 
          $name = $file->getClientOriginalName();
@@ -88,6 +92,22 @@ class UploaddetailsController extends Controller
         // $file->storeAs('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . "/" . $count ,"$name");
 
         // }
+=======
+         $ext = $file->guessClientExtension();
+
+
+        $time = time();
+
+        $lala = Storage::files('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile') . '/');
+
+        $count = count($lala);
+
+        $countfile = $count + 1;
+
+         $file->storeAs('uploadedfile/' . Session::get('usertoken') . Session::get('usertimefile'),  "$countfile.{$ext}");
+
+         
+>>>>>>> d5532b219e87495c551539ec791b1105dec605c0
     }
 
     /**

@@ -35,6 +35,8 @@ Route::get('/uploadedfile/1/1', 'FrontEnd\UploaddetailsController@download');
 
 Route::get('/uploaddetails', 'FrontEnd\UploaddetailsController@create');
 
+Route::get('/uploaddetails', 'FrontEnd\UploaddetailsController@create');
+
 Route::get('/orderdetails', 'FrontEnd\OrderdetailsController@create');
 
 Route::get('/orderdetails/create', function()
@@ -42,7 +44,10 @@ Route::get('/orderdetails/create', function()
 	return view('auth.login');
 });
 
+<<<<<<< HEAD
 Route::get('projects/create/{id?}', 'ProjectsController@create');
+=======
+>>>>>>> d5532b219e87495c551539ec791b1105dec605c0
 
 Route::resource('users', 'UsersController');
 

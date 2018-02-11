@@ -64,7 +64,10 @@ class OrderdetailsController extends Controller
          session()->put('user_engagement_code',$request->input('engagement_code'));
          session()->put('user_client_name',$request->input('client_name'));
          session()->put('user_job_description',$request->input('job_description'));
+<<<<<<< HEAD
          
+=======
+>>>>>>> d5532b219e87495c551539ec791b1105dec605c0
 
          
 
